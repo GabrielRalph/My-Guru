@@ -529,6 +529,7 @@
     },
     created(){
       firebase.database().ref('users/door-rights/'+firebase.auth().currentUser.uid).on('value', (sc) => {
+        this.doorState = {};
           for(var door in sc.val()){
             this.door[door + 'Shown'] = true;
           }
