@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div>
-
+    <div v-if = "pop" class = "popup">
+      <div v-for = "(value, door) in doors" :key = "door +'door2'" @click = "addDoor(door)">
+        <v-icon color = "#ffffff">done</v-icon>
+        <span style = "padding-left: 15px">{{door}}</span>
+      </div>
     </div>
     <table v-if = "users">
       <tr v-for = "(user, key) in users" :key = 'key'>
@@ -17,7 +20,7 @@
           {{door}}
           <v-icon color = "#FFFFFF">no_encryption</v-icon>
         </td>
-        <td class = "click" @click = "addRight(key)">
+        <td class = "click" @click = "pop = key">
           <v-icon color = "#FFFFFF">add</v-icon>
         </td>
       </tr>
@@ -32,11 +35,16 @@
     data(){
       return {
         users:false,
+        pop: false,
         doorRights: {},
         doors: {},
       }
     },
     methods: {
+      addDoor(door){
+        firebase.database().ref('users/door-rights/'+this.pop+'/'+door).set(true);
+        this.pop = false
+      },
       remove(key, door){
         firebase.database().ref('users/door-rights/'+key+'/'+door).remove();
       }
@@ -73,5 +81,25 @@ table td{
   font-family: 'Roboto';
 }
 .click{ cursor: pointer;}
+.popup{
+  padding: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 500;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(35px);
+}
+.popup div{
+  border-radius: 35px;
+  background: var(--panel-color);
+  line-height: 70px;
+  color: white;
+  padding: 0 15px;
+  margin-bottom: 5px;
+  font-family: 'Roboto';
+}
 
 </style>
