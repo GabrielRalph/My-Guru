@@ -186,9 +186,9 @@ body::-webkit-scrollbar {
 .user-logout div span{
   font-family: 'Guru';
   color: white;
-  font-size: 18px;
-  line-height: 25px;
-  padding: 90px 29px 20px 29px;
+  font-size: 16px;
+  line-height: 19px;
+  padding: 70px 29px 15px 29px;
   float: left;
 }
 :root{

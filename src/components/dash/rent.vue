@@ -5,18 +5,19 @@
         <td>
           <h1>Due on</h1>
         </td>
-        <td >
+        <td style = "border-left: 1px solid white; padding-left:15px">
           <h2>Balance</h2>
         </td>
       </tr>
       <tr style  = "height: 10px">
-
+        <td></td>
+        <td style = "border-left: 1px solid white; padding-left:15px"></td>
       </tr>
       <tr>
         <td>
           <h3>7 Jun</h3>
         </td>
-        <td style = "float: right">
+        <td style = "border-left: 1px solid white; padding-left:15px">
           <h4>{{rent}}</h4>
         </td>
       </tr>
@@ -75,17 +76,17 @@
   font-family: 'Guru';
 }
 h1{
-  font-size: 20px;
+  font-size: 16px;
 }
 h2{
-  font-size: 20px;
+  font-size: 16px;
   font-style: italic;
 }
 h3{
-  font-size: 20px;
+  font-size: 16px;
 }
 h4{
-  font-size: 20px;
+  font-size: 16px;
   color: var(--text-color)
 }
 </style>

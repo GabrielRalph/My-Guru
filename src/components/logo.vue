@@ -726,7 +726,7 @@ svg{
     animation-timing-function: cubic-bezier(0.312,0.504, 0.6366, 1);
   }
   25% {
-    top: calc(0px - var(--logo-size)/var(--wave-length-y));
+    top: calc(-1* var(--logo-size)/var(--wave-length-y));
     animation-timing-function: cubic-bezier(0.3634, 0, 0.688, 0.496);
   }
   50% {
@@ -755,7 +755,7 @@ svg{
     animation-timing-function: cubic-bezier(0.312,0.504, 0.6366, 1);
   }
   75% {
-    left: calc(0px - var(--logo-size)/var(--wave-length-x));
+    left: calc(-1*var(--logo-size)/var(--wave-length-x));
     animation-timing-function: cubic-bezier(0.3634, 0, 0.688, 0.496);
   }
   100% {

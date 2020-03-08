@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <table class = "door-container">
       <tr>
         <td v-if = "door.backShown" style = "width: 50%" @click = "open('back')">
@@ -552,8 +552,8 @@
 }
 
 .door-container td{
-  padding: 20px;
-  border-radius: 20px;
+  padding: 15px;
+  border-radius: 15px;
   user-select: none;
   background: var(--panel-color);
   perspective: 1000px
