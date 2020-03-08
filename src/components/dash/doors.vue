@@ -529,10 +529,12 @@
     },
     created(){
       firebase.database().ref('users/door-rights/'+firebase.auth().currentUser.uid).on('value', (sc) => {
-        this.doorState = {};
-          for(var door in sc.val()){
-            this.door[door + 'Shown'] = true;
-          }
+        console.log('log');
+        this.door = {};
+        for(var door in sc.val()){
+          this.door[door + 'Shown'] = true;
+        }
+        this.$forceUpdate();
       })
         firebase.database().ref('doors').on('value', (sc2) => {
         this.doorState = sc2.val();
