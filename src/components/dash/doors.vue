@@ -28,9 +28,9 @@
             <path class="lines" d="M47.3,14.4c3.9,4.4,8.6,8.7,13.9,12.7c3.4,2.6,6.8,4.9,10.3,6.9"/>
           </svg>
         </td>
-        <td v-if = "access.lock0" style = "opacity: 0; padding: 0"><div style = "width: 8px"></div></td>
-        <td v-if = "access.lock0" style = "width: 50%" @click = "open('lock0')">
-          <svg :class = "{doors:true,open:states.lock0}" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 85.1 128.6" style="enable-background:new 0 0 85.1 128.6;" xml:space="preserve">
+        <td v-if = "access.lock1" style = "opacity: 0; padding: 0"><div style = "width: 8px"></div></td>
+        <td v-if = "access.lock1" style = "width: 50%" @click = "open('lock1')">
+          <svg :class = "{doors:true,open:states.lock1}" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 85.1 128.6" style="enable-background:new 0 0 85.1 128.6;" xml:space="preserve">
             <path class="lines" d="M40.9,6c-6.5,0.1-13.1,0.3-19.6,0.4c-3.1,0.1-6.1,0.1-9.2,0.3C9.8,6.9,7.6,6.6,6.9,9.1
             c-0.8,2.8-0.4,6.4-0.5,9.3c-0.1,3.4-0.2,6.7-0.2,10.1c-0.1,6.3,0.1,12.4,0.2,18.7c0.2,12.3,0.1,24.6,0,36.9
             c-0.1,6.6,0.1,13.2-0.1,19.8c-0.1,3.2-0.2,6.5-0.2,9.7c0,2.1-0.7,6.1,0.7,7.8c1.5,1.8,5.6,1.1,7.7,1.1c3.2,0,6.3-0.2,9.5-0.3
