@@ -2,24 +2,23 @@
   <div id = "admin-list" ref = "adminList" class = "admin" v-if = "users">
     <div :class = "{popup: true, shown: edit_user}" @click = "edit_user = false">
       <table>
-        <tr>
+        <tr v-for = "(request, uid) in edit_user" :key = "'req'+uid">
           <td>
-            <img :src = "edit_user.photoURL" />
-            <div class = "search">
-              <v-icon color = "var(--cream)">done</v-icon>
-              <input type = "text" v-model = "edit_user.displayName" />
+            <div class = "first">
+              <img :src = "users_by_uid[uid].photoURL" />
+              <span>{{users_by_uid[uid].displayName}}</span>
             </div>
           </td>
-          <td v-if = "doorAccess[edit_user.uid]">
-            {{doorAccess[edit_user.uid]}}
-            <div class = "search" v-for = "(on, door) in doors" :key = "door+'doorname'">
-              <div class = "circle">
-                <v-icon color = "var(--cream)" :class = "{slected: doorAccess[edit_user.uid][door]}">done</v-icon>
-              </div>
-              <span>{{door}}</span>
+          <td>
+            <div class = "center">
+              <span>{{request.message}}</span>
             </div>
           </td>
-
+          <td>
+            <div class = "last">
+              <v-icon size = "30px" color = "var(--cream)" @click = "approveRequest(request, uid)">airplanemode_active</v-icon>
+            </div>
+          </td>
         </tr>
       </table>
     </div>
@@ -103,6 +102,7 @@
     data(){
       return {
         users:false,
+        users_by_uid: false,
         edit_user: false,
         doorAccess: false,
         doors: {},
@@ -131,6 +131,14 @@
 
     },
     methods: {
+      approveRequest(request, uid){
+        for(var i in request){
+          if(i != 'message'){
+            firebase.database().ref('usersRev1/' + request[i].set + '/' + uid).set(request[i].value);
+          }
+        }
+        firebase.database().ref('requests/'+uid).remove();
+      },
       gm(uid, type){
         if(this.attendance[uid][type + 'Hosted']){
           var per = this.attendance[uid][type + 'Attended']/this.attendance[uid][type + 'Hosted'];
@@ -146,6 +154,7 @@
       });
       firebase.database().ref('usersRev1/profiles').on('value', (sc) => {
         this.users = [];
+        this.users_by_uid = sc.val();
         for(var uid in sc.val()){
           var user = sc.val()[uid];
           user['uid'] = uid
@@ -183,6 +192,11 @@
         this.attendance = sc.val();
         console.log(this.attendance);
       })
+      firebase.database().ref('requests').on('value', (sc) => {
+        if(sc.val()){
+          this.edit_user = sc.val();
+        }
+      })
     }
   }
 </script>
@@ -198,9 +212,7 @@
   padding: var(--padding);
   transition: var(--my-cube);
 }
-.popup img{
-  width: 100px;
-}
+
 .shown{
   opacity: 1;
   z-index: 500;

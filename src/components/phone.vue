@@ -2,18 +2,21 @@
     <div class = "box" @click = "fullScreen" :class = "{hide: hidden}">
       <doors></doors>
       <rent></rent>
+      <request></request>
     </div>
 </template>
 
 <script>
   import doors from './dash/doors'
   import rent from './dash/rent'
+  import request from './dash/request'
 
   export default {
     name: 'phone',
     components: {
       rent,
       doors,
+      request,
     },
     props: {
       hide: {

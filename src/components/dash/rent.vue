@@ -23,7 +23,7 @@
       </tr>
     </table>
   </div> -->
-  <div class = "airbox" ref = "rent">
+  <div v-if = "show" class = "airbox" ref = "rent">
     <div>
       <h1>Due on</h1>
       <h2>{{date}}</h2>
@@ -48,6 +48,7 @@
         date: '',
         color: false,
         ergencyFlag: false,
+        show: true,
       }
     },
     computed:{
@@ -56,7 +57,7 @@
       }
     },
     updated(){
-      this.$refs.rent.style.setProperty('--this-text-color', this.color)
+      if(this.show){this.$refs.rent.style.setProperty('--this-text-color', this.color)}
     },
     created(){
       firebase.database().ref('dates/Rent Day').on('value', (sc) => {
@@ -86,15 +87,18 @@
 
       })
       firebase.database().ref('usersRev1/rentAccounts/'+firebase.auth().currentUser.uid).on('value', (sc) => {
-        this.rentBalance = sc.val().balance;
-        this.color = '#f94242';
-        if(sc.val()){
-          if(sc.val() > -400&sc.val()<1){
-            this.color = '#f9c142';
-          }else if(sc.val() > 0&sc.val()<200){
-            this.color = '#a7ef1b';
-          }else if(sc.val() > 200){
-            this.color = '#1bef3f';
+        this.show = !!sc.val()
+        if(this.show){
+          this.rentBalance = sc.val().balance;
+          this.color = '#f94242';
+          if(sc.val()){
+            if(sc.val() > -400&sc.val()<1){
+              this.color = '#f9c142';
+            }else if(sc.val() > 0&sc.val()<200){
+              this.color = '#a7ef1b';
+            }else if(sc.val() > 200){
+              this.color = '#1bef3f';
+            }
           }
         }
       })

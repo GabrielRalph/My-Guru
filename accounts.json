@@ -5,7 +5,7 @@
     "103": "Accounts Recievable",
     "104": "Running Assets",
 
-    "301": "Accounts Payable",
+    "201": "Accounts Payable",
 
     "301": "Capital",
 
@@ -37,7 +37,7 @@
       "credit": {
         "301": 1400
       },
-      "notes": "Gabriel did 14hrs of web development"
+      "notes": "Gabriel did 14hrs 6pm-8am of web development"
     },
     "9/03/2020": {
       "debit": {
@@ -47,8 +47,7 @@
         "301": 400
       },
       "notes": "Gabriel and Ethan did 2hrs each of meeting time"
-    }
-
+    },
     "9/03/2020": {
       "debit": {
         "504": 35
@@ -56,7 +55,16 @@
       "credit": {
         "301": 35
       },
-      "notes": "Ethan spent 30 on meeting supplies"
-    }
+      "notes": "Ethan spent 35 on meeting supplies"
+    },
+    "12/03/2020": {
+      "debit": {
+        "501": 1400
+      },
+      "credit": {
+        "301": 1400
+      },
+      "notes": "Gabriel did 8hrs 4pm - 1am of web development"
+    },
   }
 }
