@@ -30,6 +30,13 @@
               balance: 200,
             }
           },
+          2: {
+            set: 'residents',
+            value: {
+              committee: 'dummy',
+              unit: 10,
+            }
+          },
           message: 'requested resident status'
         })
       }
