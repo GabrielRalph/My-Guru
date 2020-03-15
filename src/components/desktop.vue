@@ -2,23 +2,25 @@
   <div>
     <v-window v-model = "page">
       <v-window-item>
-        <table>
+        <!-- <table width = "100%">
           <tr>
-            <td width = "60%">
+            <td width = "70%">
               <div @click = "adminMode(mode)" class = "editor-option" v-for = "(on, mode) in adminRights" :key = "mode + 'opt'">
                 {{mode}}
               </div>
             </td>
-            <td width = "500px">
+            <td width = "300px">
               <div>
-                <phone></phone>
               </div>
             </td>
           </tr>
-        </table>
+        </table> -->
+        <div class = "side">
+          <phone></phone>
+        </div>
       </v-window-item>
       <v-window-item>
-        <door-rights></door-rights>
+        <DoorAccess></DoorAccess>
       </v-window-item>
     </v-window>
   </div>
@@ -26,18 +28,23 @@
 
 <script>
 import firebase from 'firebase'
-  import DoorRights from './admin/door-rights'
+  import DoorAccess from './admin/doorAccess.vue'
   import phone from './phone'
   export default {
     name: 'desktop',
     components: {
       phone,
-      DoorRights
+      DoorAccess
     },
     data(){
       return{
         adminRights: {},
         page: 0,
+      }
+    },
+    watch: {
+      switchValue: function(a){
+        console.log(a);
       }
     },
     methods: {
@@ -46,7 +53,7 @@ import firebase from 'firebase'
       }
     },
     created(){
-      firebase.database().ref('users/admin-rights/'+firebase.auth().currentUser.uid).on('value', (sc) => {
+      firebase.database().ref('usersRev1/adminRights/'+firebase.auth().currentUser.uid).on('value', (sc) => {
         this.adminRights = sc.val();
       })
     }
@@ -64,5 +71,10 @@ table td{
   font-family: 'Guru';
   color: white;
   width: 160px;
+}
+.side{
+  float: right;
+  width: 400px;
+  height: 100vh;
 }
 </style>

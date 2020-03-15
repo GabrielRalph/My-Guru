@@ -2,18 +2,22 @@
   <div id = "app">
     <template v-if = "user">
       <div class = "user-logout" >
-        <div @click = "logout" :class = "{'show-logout': showlogout}">
+        <div @click = "option_function" :class = "{'show-logout': showlogout}">
           <span>
-            L<br />O<br />G<br />O<br />U<br />T<br />
+            <template v-for = "(opt, key) in option" >{{opt}}<br :key = "key"/></template>
           </span>
           <img :src = "userProfile.photoURL"/>
         </div>
       </div>
-      <phone v-if = "isMobile"></phone>
-      <desktop v-else></desktop>
+      <div :class = "{phone: true, hide: window_page != 0}">
+        <phone></phone>
+      </div>
+      <div :class = "{desktop: true, hide: window_page != 1}">
+        <admin></admin>
+      </div>
     </template>
-    <div @click = "showlogout = !showlogout">
-      <logo  v-if = "user|loading" key = "logo" :size = "logosize" :pos = "logopos" :mode = "logomode" :xWave = "loading" :yWave = "loading" margin = '30px'></logo>
+    <div @click = "change_option">
+      <logo  v-if = "user|loading" key = "logo" :size = "logosize" :pos = "logopos" :mode = "logomode" :xWave = "loading" :yWave = "loading" margin = '20px'></logo>
     </div>
     <div v-if = "auth" id = "firebaseui-auth-container"></div>
   </div>
@@ -22,20 +26,19 @@
 <script>
 import logo from './components/logo.vue'
 import phone from './components/phone.vue'
-import desktop from './components/desktop.vue'
+import admin from './components/admin.vue'
 import firebase from 'firebase'
 var firebaseui = require('firebaseui');
 import 'firebase/database'
 
 var config = {
-  apiKey: "AIzaSyDe5Z5STt003BGd5k3EuGSTu7hWKqZltI4",
-  authDomain: "guru-admin.firebaseapp.com",
-  databaseURL: "https://guru-admin.firebaseio.com",
-  projectId: "guru-admin",
-  storageBucket: "guru-admin.appspot.com",
-  messagingSenderId: "618229197693",
-  appId: "1:618229197693:web:08bdb2afd1457f6f22ba14"
-};
+   apiKey: "AIzaSyBI13TKjc4WD4Riq9uTRVzileI-0cPsw-w",
+   authDomain: "myiot-41369.firebaseapp.com",
+   databaseURL: "https://myiot-41369.firebaseio.com",
+   projectId: "myiot-41369",
+   storageBucket: "myiot-41369.appspot.com",
+   messagingSenderId: "201145539454"
+ };
 
 firebase.initializeApp(config);
 
@@ -80,10 +83,37 @@ export default {
   name: 'App',
   components: {
     logo,
-    desktop,
+    admin,
     phone,
   },
   methods:{
+    option_function(){
+      this[this.option.toLowerCase()]();
+    },
+    change_option(){
+      if(this.showlogout){
+        this.showlogout = false;
+      }else{
+        if(this.option == 'LOGOUT'){
+          if(this.window_page == 1){
+            this.option = 'DASHBOARD'
+          }else{
+            this.option = 'ADMIN';
+          }
+        }else{
+          this.option = 'LOGOUT';
+        }
+        this.showlogout = true;
+      }
+    },
+    admin(){
+      this.option = 'DASHBOARD';
+      this.window_page = 1;
+    },
+    dashboard(){
+      this.window_page = 0;
+      this.option = 'ADMIN';
+    },
     logout(){
       console.log('logout');
       this.auth = true;
@@ -101,10 +131,14 @@ export default {
     logopos: '50 50',
     showlogout: false,
     isMobile: true,
+    option: 'LOGOUT',
+    window_page: 2,
 
   }),
   created(){
-    this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    window.addEventListener('resize', () => {
+      this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    })
     firebase.auth().onAuthStateChanged(user => {
       if (ui.isPendingRedirect()) {
         ui.start('#firebaseui-auth-container', authConfig);
@@ -114,7 +148,7 @@ export default {
       }else{
         console.log('that');
         if(user){
-          var ref = firebase.database().ref('users/profiles/' + user.uid)
+          var ref = firebase.database().ref('usersRev1/profiles/' + user.uid)
           ref.on('value', (sc) => {
             this.auth = false;
             if(sc.val()){
@@ -122,7 +156,7 @@ export default {
               setTimeout(() => {
                 this.user = true;
                 this.logopos = '100 0';
-                this.logosize = '100px';
+                this.logosize = '88px';
                 this.loading = false;
               }, 200)
               setTimeout(() => {
@@ -130,7 +164,8 @@ export default {
               }, 500)
               setTimeout(() => {
                 this.showlogout = true;
-              }, 2000)
+                this.window_page = 0;
+              }, 1500)
             }else{
               ref.set({
                 photoURL: user.photoURL,
@@ -151,24 +186,62 @@ export default {
 </script>
 
 <style>
+.phone{
+  transition: var(--my-cube);
+  height: 100%;
+  width: 100%;
+  max-width: 450px;
+  float: right;
+  position: relative;
+}
+.desktop{
+  transition: var(--my-cube);
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.phone:not(.hide){
+  transform: translateY(0px);
+}
+.phone.hide{
+  transform: translateY(-100%);
+}
+.desktop.hide{
+  transform: translateY(100%);
+}
 
+.full-window{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+.red{
+  width: 100%;
+  height: 500px;
+  background: red;
+}
 .user-logout{
-  width: 70px;
+  width: 60px;
   position: absolute;
-  right: var(--padding);
-  top: 55px;
-  bottom: 0px;
-  border-radius: var(--my-radius) var(--my-radius) 0 0;
+  right: calc(var(--padding));
+  bottom: calc(var(--padding));
+  top: calc(var(--padding) + 38px);
+  border-radius: 5px 5px var(--my-radius) var(--my-radius);
+  transition: var(--my-cube);
   overflow: hidden;
+  z-index: 100;
 }
 body::-webkit-scrollbar {
   display: none;
 }
 .user-logout div{
-  width: 70px;
-  background: var(--panel-color);
+  padding-top: 35px;
+  width: 60px;
   position: absolute;
-  border-radius: 0 0 var(--my-radius) var(--my-radius);
+  border: 3px solid var(--cream);
+  border-radius: 2px 2px var(--my-radius) var(--my-radius);
   transition: var(--my-cube);
 }
 .user-logout div:not(.show-logout){
@@ -178,38 +251,54 @@ body::-webkit-scrollbar {
   top: 0;
 }
 .user-logout div img{
-  height: 70px;
+  height: 54px;
   border-radius: 35px;
-  margin-right: 20px;
-  float: left;
+  float: right;
 }
 .user-logout div span{
-  font-family: 'Guru';
-  color: white;
-  font-size: 16px;
-  line-height: 19px;
-  padding: 70px 29px 15px 29px;
+
+  font-family: 'Guru Sans';
+  color: var(--cream);
+  font-size: 19px;
+  line-height: 18px;
+  padding:  15px 21px;
+  text-align: center;
   float: left;
 }
 :root{
   --guru-color: #ff9b34;
   --text-color: #070706;
   --background-color:#fffdf5;
+  --cream:#fffdf5;
+  --orange:#ff9b34;
+  --black: #070706;
   --panel-color: rgba(0, 0, 0, 0.6);
   --my-radius: 35px;
-  --padding: 30px;
+  --padding: 20px;
   --my-cube: 1s cubic-bezier(0.64, 0, 0.61, 1);
 }
 body{
+  color: #fffdf5;
+  user-select: none;
+  height: 100vh;
+}
+#app{
   background-image: url('https://firebasestorage.googleapis.com/v0/b/guru-admin.appspot.com/o/assets%2Fbackdrop.jpg?alt=media&token=251b23cd-8a28-46d7-aa28-1bf91d4af3fd');
   background-size: cover;
-  height: 100vh;
-  padding: var(--padding);
+  position: fixed;
+  padding-right: calc(var(--padding) + 60px);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #293c1c;
   overflow: hidden;
+  background-attachment: fixed;
 }
 #firebaseui-auth-container{
   margin: auto;
   max-width: 500px;
+  padding: var(--padding);
 }
 .firebaseui-card-content{
   width: 100%;

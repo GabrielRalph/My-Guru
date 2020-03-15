@@ -1,10 +1,8 @@
 <template>
-  <div class = "phone" @scroll = "scroll">
-    <div class = "box" :class = "{hide: hidden}">
+    <div class = "box" @click = "fullScreen" :class = "{hide: hidden}">
       <doors></doors>
       <rent></rent>
     </div>
-  </div>
 </template>
 
 <script>
@@ -17,21 +15,33 @@
       rent,
       doors,
     },
+    props: {
+      hide: {
+        type: Boolean,
+        default: false,
+      }
+    },
     data(){
       return{
         hidden: true,
       }
     },
-    methods:{
-      scroll(){
-        alert('scroll')
+    watch: {
+      hide: function(a){
+        console.log('some');
+        this.hidden = a;
       }
+    },
+    methods:{
+      fullScreen(){
+        window.scrollTo(0,1);
+      },
     },
     mounted(){
       setTimeout(() => {
         this.hidden = false;
 
-      }, 2000)
+      }, 1000)
     },
     created(){
       console.log('this2');
@@ -40,19 +50,28 @@
 </script>
 <style>
   .phone{
-    margin-right: 90px;
     transition: var(--my-cube);
+    height: 100%;
+    width: 100%;
+    max-width: 450px;
+    float: right;
     position: relative;
   }
   .box{
+    padding: var(--padding);
     position: absolute;
     transition: var(--my-cube);
-
-  }
-  .box:not(.hide){
     top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    max-width: 450px;
   }
-  .hide{
-    top: -500px;
+  .box::-webkit-scrollbar {
+    display: none;
   }
+
+
 </style>

@@ -1,0 +1,62 @@
+{
+  "accountsList": {
+    "101": "Assets",
+    "102": "Cash at Bank",
+    "103": "Accounts Recievable",
+    "104": "Running Assets",
+
+    "301": "Accounts Payable",
+
+    "301": "Capital",
+
+    "401": "Sales Incomce",
+
+    "501": "Wages Expenses",
+    "502": "Running Expenses",
+    "503": "Equipment Expenses",
+    "504": "Meeting Expenses",
+    "505": "depreciation",
+    "601": "Accumulated Depreciation"
+  }
+
+  "generalJournal": {
+    "20/02/2020": {
+      "debit": {
+        "104": 74
+      }
+      "credit": {
+        "301": 74
+      }
+      "notes": "Gabriel purchased a domain for one year",
+      "depreciation": "P - P*t/365",
+    },
+    "8/03/2020": {
+      "debit": {
+        "501": 1400
+      },
+      "credit": {
+        "301": 1400
+      },
+      "notes": "Gabriel did 14hrs of web development"
+    },
+    "9/03/2020": {
+      "debit": {
+        "501": 400
+      },
+      "credit": {
+        "301": 400
+      },
+      "notes": "Gabriel and Ethan did 2hrs each of meeting time"
+    }
+
+    "9/03/2020": {
+      "debit": {
+        "504": 35
+      },
+      "credit": {
+        "301": 35
+      },
+      "notes": "Ethan spent 30 on meeting supplies"
+    }
+  }
+}
