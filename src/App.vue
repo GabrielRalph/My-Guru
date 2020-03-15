@@ -13,7 +13,7 @@
         <phone></phone>
       </div>
       <div :class = "{desktop: true, hide: window_page != 1}">
-        <admin></admin>
+        <admin v-if = "loadAdmin"></admin>
       </div>
     </template>
     <div @click = "change_option">
@@ -99,6 +99,7 @@ export default {
             this.option = 'DASHBOARD'
           }else{
             this.option = 'ADMIN';
+            this.loadAdmin = true;
           }
         }else{
           this.option = 'LOGOUT';
@@ -133,6 +134,7 @@ export default {
     isMobile: true,
     option: 'LOGOUT',
     window_page: 2,
+    loadAdmin: false,
 
   }),
   created(){
